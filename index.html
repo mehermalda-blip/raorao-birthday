@@ -3,6 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
 *{box-sizing:border-box}body{margin:0;color:#f5f0c8;font-family:'VT323',monospace;font-size:25px;background:linear-gradient(#a4d9e8,#b6ded0 48%,#47794d)}
 header{position:sticky;top:0;z-index:10;background:#101f17;border-bottom:5px solid #7db44c;padding:10px 4%;box-shadow:0 5px 12px #0005}
+body.visitor header{display:none}
 .toolbar{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;font-family:'Press Start 2P';font-size:10px;color:#f5d65b}.actions{display:flex;gap:7px;flex-wrap:wrap}
 button{font-family:'Press Start 2P';font-size:10px;padding:13px 12px;border:3px solid #d9d58b;box-shadow:4px 4px #101810;background:linear-gradient(#74bd48,#3f852f);color:white;cursor:pointer}button.gold{background:linear-gradient(#e4b34b,#a86c26)}button.red{background:linear-gradient(#a35b50,#63342d)}
 #status{font-size:19px;margin-top:10px;color:#e5e9c7}nav{background:#1b3526;padding:16px 4%;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-family:'Press Start 2P';font-size:10px;color:#f5d65b}
@@ -50,10 +51,12 @@ function savePage(){localStorage.setItem('raoraoPageText',JSON.stringify([...doc
 function resetPage(){if(confirm('Reset this page to the screenshot-recovered version?')){localStorage.removeItem('raoraoPageText');location.reload();}}
 function restorePage(){try{let a=JSON.parse(localStorage.getItem('raoraoPageText')||'null');if(a)document.querySelectorAll('[data-editable]').forEach((e,i)=>{if(a[i]!==undefined)e.innerHTML=a[i];});}catch(e){}}
 function replacePhoto(ev,i){let f=ev.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{document.querySelectorAll('.photo img')[i].src=r.result;};r.readAsDataURL(f);}
-function lightCake(){document.getElementById('cakeText').textContent='The candle is lit! Make a wish, birthday loser 🤗';}
+function lightCake(){document.querySelector('.cake').textContent='🎂🕯️🔥';document.getElementById('cakeText').textContent='🔥 CANDLE LIT! Make a wish, birthday loser 🤗';}
 const roasts=['Raorao doesnt has the confidence of someone who punches a tree with bare hands and calls it a plan.','Bro has the survival instincts of a Minecraft chicken in a thunderstorm.','Your brain runs on 2% battery and questionable side quests.'];
 function newRoast(){document.getElementById('roast').textContent=roasts[Math.floor(Math.random()*roasts.length)];}
-function openChest(){document.querySelector('.letter').scrollIntoView({behavior:'smooth',block:'center'});document.querySelector('.letter').style.boxShadow='0 0 25px #f4d45b';}
+function openChest(){const letter=document.querySelector('.letter');letter.style.display='block';letter.scrollIntoView({behavior:'smooth',block:'center'});letter.style.boxShadow='0 0 25px #f4d45b';}
 function downloadPage(){savePage();let clone=document.documentElement.cloneNode(true);let source=[...document.querySelectorAll('[data-editable]')],target=[...clone.querySelectorAll('[data-editable]')];source.forEach((e,i)=>{if(target[i])target[i].innerHTML=e.innerHTML;});clone.querySelectorAll('[contenteditable]').forEach(e=>e.removeAttribute('contenteditable'));clone.body.classList.remove('editing');clone.querySelector('header')?.remove();clone.querySelector('#status')?.remove();let blob=new Blob(['<!doctype html>\n'+clone.outerHTML],{type:'text/html'});let url=URL.createObjectURL(blob);let a=document.createElement('a');a.href=url;a.download='raorao_birthday_world_custom.html';a.style.display='none';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000);}
+const editorMode = new URLSearchParams(location.search).get('edit') === '1';
+if (!editorMode) document.body.classList.add('visitor');
 restorePage();
 </script></body></html>
