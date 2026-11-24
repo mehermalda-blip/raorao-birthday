@@ -56,4 +56,4 @@ function newRoast(){document.getElementById('roast').textContent=roasts[Math.flo
 function openChest(){document.querySelector('.letter').scrollIntoView({behavior:'smooth',block:'center'});document.querySelector('.letter').style.boxShadow='0 0 25px #f4d45b';}
 function downloadPage(){savePage();let clone=document.documentElement.cloneNode(true);let source=[...document.querySelectorAll('[data-editable]')],target=[...clone.querySelectorAll('[data-editable]')];source.forEach((e,i)=>{if(target[i])target[i].innerHTML=e.innerHTML;});clone.querySelectorAll('[contenteditable]').forEach(e=>e.removeAttribute('contenteditable'));clone.body.classList.remove('editing');clone.querySelector('header')?.remove();clone.querySelector('#status')?.remove();let blob=new Blob(['<!doctype html>\n'+clone.outerHTML],{type:'text/html'});let url=URL.createObjectURL(blob);let a=document.createElement('a');a.href=url;a.download='raorao_birthday_world_custom.html';a.style.display='none';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000);}
 restorePage();
-</script></body></html
+</script></body></html>
